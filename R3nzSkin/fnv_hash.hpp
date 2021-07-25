@@ -1,28 +1,5 @@
-/* This file is part of nSkinz by namazso, licensed under the MIT license:
-*
-* MIT License
-*
-* Copyright (c) namazso 2018
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-* SOFTWARE.
-*/
 #pragma once
+
 #include <cstdlib>
 #include <cstdint>
 
@@ -62,24 +39,24 @@ namespace detail {
 
 	public:
 		template <std::size_t N>
-		static __forceinline constexpr auto hash_constexpr( const char( &str )[ N ], const std::size_t size = N ) -> hash {
-			return static_cast<hash>( 1ull * ( size == 1
-				? ( k_offset_basis ^ str[ 0 ] )
-				: ( hash_constexpr( str, size - 1 ) ^ str[ size - 1 ] ) ) * k_prime );
+		static __forceinline constexpr auto hash_constexpr(const char(&str)[N], const std::size_t size = N) -> hash {
+			return static_cast<hash>(1ull * (size == 1
+				? (k_offset_basis ^ str[0])
+				: (hash_constexpr(str, size - 1) ^ str[size - 1])) * k_prime);
 		}
 
-		static auto __forceinline hash_runtime( const char* str ) -> hash {
+		static auto __forceinline hash_runtime(const char* str) -> hash {
 			auto result = k_offset_basis;
 			do {
 				result ^= *str++;
 				result *= k_prime;
-			} while ( *( str - 1 ) != '\0' );
+			} while (*(str - 1) != '\0');
 
 			return result;
 		}
 	};
 }
 
-using fnv = ::detail::fnv_hash<sizeof( void* ) * 8>;
+using fnv = ::detail::fnv_hash<sizeof(void*) * 8>;
 
 #define FNV(str) (std::integral_constant<fnv::hash, fnv::hash_constexpr(str)>::value)
