@@ -10,7 +10,7 @@
 #include "menu.hpp"
 #include "fnv_hash.hpp"
 #include "game_classes.hpp"
-#include "autoupdater.hpp"
+#include "memory.hpp"
 
 std::once_flag change_skins;
 
@@ -125,7 +125,7 @@ void skin_changer::init() noexcept
 	freopen("CONOUT$", "w", stdout);
 	freopen("CONOUT$", "w", stderr);
 #endif
-	autoupdater::start(true);
+	memory::start(true);
 	using namespace std::chrono_literals;
 	auto client = *reinterpret_cast<GameClient**>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::GameClient);
 	while (!client || client->game_state != GGameState_s::Running) {
@@ -147,7 +147,7 @@ void skin_changer::init() noexcept
 	}
 
 	std::this_thread::sleep_for(500ms);
-	autoupdater::start(false);
+	memory::start(false);
 	std::this_thread::sleep_for(100ms);
 	config::load();
 	d3d_hook::hook();

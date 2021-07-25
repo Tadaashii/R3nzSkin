@@ -1,31 +1,3 @@
-/* This file is part of LeagueSkinChanger by b3akers, licensed under the MIT license:
-*
-* MIT License
-*
-* Copyright (c) b3akers 2020
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in all
-* copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-* SOFTWARE.
-*/
-#include "autoupdater.hpp"
-#include "offsets.hpp"
-#include "game_classes.hpp"
-
 #include <Windows.h>
 #include <vector>
 #include <cinttypes>
@@ -33,86 +5,74 @@
 #include <thread>
 #include <chrono>
 
-uint8_t* find_signature( const wchar_t* szModule, const char* szSignature )
+#include "memory.hpp"
+#include "offsets.hpp"
+#include "game_classes.hpp"
+
+uint8_t* find_signature(const wchar_t* szModule, const char* szSignature) noexcept
 {
 	try {
-
-		auto module = GetModuleHandle( szModule );
-		static auto pattern_to_byte = [ ]( const char* pattern )
-		{
+		auto module = GetModuleHandle(szModule);
+		static auto pattern_to_byte = [](const char* pattern) {
 			auto bytes = std::vector<int>{};
-			auto start = const_cast< char* >( pattern );
-			auto end = const_cast< char* >( pattern ) + strlen( pattern );
+			auto start = const_cast<char*>(pattern);
+			auto end = const_cast<char*>(pattern) + strlen(pattern);
 
-			for ( auto current = start; current < end; ++current )
-			{
-				if ( *current == '?' )
-				{
+			for (auto current = start; current < end; ++current) {
+				if (*current == '?') {
 					++current;
-					if ( *current == '?' )
+					if (*current == '?')
 						++current;
-					bytes.push_back( -1 );
-				} else
-				{
-					bytes.push_back( strtoul( current, &current, 16 ) );
+					bytes.push_back(-1);
+				} else {
+					bytes.push_back(strtoul(current, &current, 16));
 				}
 			}
 			return bytes;
 		};
 
-		auto dosHeader = ( PIMAGE_DOS_HEADER ) module;
-		auto ntHeaders = ( PIMAGE_NT_HEADERS ) ( ( uint8_t* ) module + dosHeader->e_lfanew );
-		auto textSection = IMAGE_FIRST_SECTION( ntHeaders );
-
+		auto dosHeader = (PIMAGE_DOS_HEADER)module;
+		auto ntHeaders = (PIMAGE_NT_HEADERS)((uint8_t*)module + dosHeader->e_lfanew);
+		auto textSection = IMAGE_FIRST_SECTION(ntHeaders);
 		auto sizeOfImage = textSection->SizeOfRawData;
-		auto patternBytes = pattern_to_byte( szSignature );
-		auto scanBytes = reinterpret_cast< uint8_t* >( module ) + textSection->VirtualAddress;
-
-		auto s = patternBytes.size( );
-		auto d = patternBytes.data( );
-
+		auto patternBytes = pattern_to_byte(szSignature);
+		auto scanBytes = reinterpret_cast<uint8_t*>(module) + textSection->VirtualAddress;
+		auto s = patternBytes.size();
+		auto d = patternBytes.data();
 		auto mbi = MEMORY_BASIC_INFORMATION{ 0 };
 		uint8_t* next_check_address = 0;
 
-		for ( auto i = 0ul; i < sizeOfImage - s; ++i )
-		{
+		for (auto i = 0ul; i < sizeOfImage - s; ++i) {
 			bool found = true;
-			for ( auto j = 0ul; j < s; ++j )
-			{
+			for (auto j = 0ul; j < s; ++j) {
 				auto current_address = scanBytes + i + j;
-				if ( current_address >= next_check_address )
-				{
-					if ( !VirtualQuery( reinterpret_cast< void* >( current_address ), &mbi, sizeof( mbi ) ) )
+				if (current_address >= next_check_address) {
+					if (!VirtualQuery(reinterpret_cast<void*>(current_address), &mbi, sizeof(mbi)))
 						break;
 
-					if ( mbi.Protect == PAGE_NOACCESS )
-					{
-						i += ( ( std::uintptr_t( mbi.BaseAddress ) + mbi.RegionSize ) - ( std::uintptr_t( scanBytes ) + i ) );
+					if (mbi.Protect == PAGE_NOACCESS) {
+						i += ((std::uintptr_t(mbi.BaseAddress) + mbi.RegionSize) - (std::uintptr_t(scanBytes) + i));
 						i--;
 						found = false;
 						break;
-					} else
-					{
-						next_check_address = reinterpret_cast< uint8_t* >( mbi.BaseAddress ) + mbi.RegionSize;
+					} else {
+						next_check_address = reinterpret_cast<uint8_t*>(mbi.BaseAddress) + mbi.RegionSize;
 					}
 				}
 
-				if ( scanBytes[ i + j ] != d[ j ] && d[ j ] != -1 )
-				{
+				if (scanBytes[i + j] != d[j] && d[j] != -1) {
 					found = false;
 					break;
 				}
 			}
-			if ( found )
-			{
-				return &scanBytes[ i ];
+			if (found) {
+				return &scanBytes[i];
 			}
 		}
 		return nullptr;
-
 	}
 	catch (std::exception& e) {
-#ifdef DEBUG
+#ifdef _DEBUG
 		printf("find_signature error: %s", e.what());
 #endif
 	}
@@ -335,69 +295,58 @@ std::vector<offset_signature> sigs = {
 	}
 };
 
-void autoupdater::start( bool gameClient )
+void memory::start(bool gameClient) noexcept
 {
-	try{
-		auto base = std::uintptr_t( GetModuleHandle( nullptr ) );
-
-		//Invalid all
-		// 
-
+	try {
+		auto base = std::uintptr_t(GetModuleHandle(nullptr));
 		auto signatureToSearch = (gameClient ? gameClientSig : sigs);
 
-		for ( auto& sig : signatureToSearch )
+		for (auto& sig : signatureToSearch)
 			*sig.offset = 0;
 
-		while ( true )
-		{
+		while (true) {
 			auto missing_offset = false;
-			for ( auto& sig : signatureToSearch )
-			{
-
-				if ( *sig.offset != 0 )
+			for (auto& sig : signatureToSearch) {
+				if (*sig.offset != 0)
 					continue;
 
-				for ( auto& pattern : sig.sigs )
-				{
-					auto address = find_signature( nullptr, pattern.c_str( ) );
+				for (auto& pattern : sig.sigs) {
+					auto address = find_signature(nullptr, pattern.c_str());
 
-					if ( !address )
-					{
-	#ifdef DEBUG
-						printf( "Signature failed: %s\n", pattern.c_str( ) );
-	#endif
+					if (!address) {
+#ifdef _DEBUG
+						printf("Signature failed: %s\n", pattern.c_str());
+#endif
 						continue;
 					}
-					if ( sig.read )
-						address = *reinterpret_cast< uint8_t** >( address + ( pattern.find_first_of( "?" ) / 3 ) );
-					else if ( address[ 0 ] == 0xE8 )
-						address = address + *reinterpret_cast< uint32_t* >( address + 1 ) + 5;
+					if (sig.read)
+						address = *reinterpret_cast<uint8_t**>(address + (pattern.find_first_of("?") / 3));
+					else if (address[0] == 0xE8)
+						address = address + *reinterpret_cast<uint32_t*>(address + 1) + 5;
 
-					if ( sig.sub_base )
+					if (sig.sub_base)
 						address -= base;
 
 					address += sig.additional;
-
-					*sig.offset = reinterpret_cast< uint32_t >( address );
+					*sig.offset = reinterpret_cast<uint32_t>(address);
 					break;
 				}
 
-				if ( !*sig.offset )
-				{
+				if (!*sig.offset) {
 					missing_offset = true;
 					break;
 				}
 			}
 
-			if ( !missing_offset )
+			if (!missing_offset)
 				break;
 
 			using namespace std::chrono_literals;
-			std::this_thread::sleep_for( 2s );
-		} 
+			std::this_thread::sleep_for(2s);
+		}
 	}
 	catch (std::exception& e) {
-#ifdef DEBUG
+#ifdef _DEBUG
 		printf("start_signature error: %s", e.what());
 #endif
 	}
