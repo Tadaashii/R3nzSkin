@@ -10,8 +10,6 @@
 # R3nzSkin
 <p align="center">
   <img height=400 src=".assets/main.png" >
-  <br>
-  <i>Mmm yes, chicken</i>
 </p>
 
 `R3nzSkin` is internal skin changer for League of Legends.
