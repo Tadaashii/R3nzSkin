@@ -48,7 +48,7 @@ bool is_injected(uint32_t pid) noexcept
 		for (i = 0; i < (cbNeeded / sizeof(HMODULE)); i++) {
 			TCHAR szModName[MAX_PATH];
 			if (GetModuleBaseName(hProcess, hMods[i], szModName, sizeof(szModName) / sizeof(TCHAR))) {
-				if (wcscmp(szModName, L"league_skin_changer.dll") == 0) {
+				if (wcscmp(szModName, L"R3nzSkin.dll") == 0) {
 					CloseHandle(hProcess);
 					return true;
 				}
@@ -79,7 +79,7 @@ bool inject(uint32_t pid) noexcept
 {
 	TCHAR current_dir[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, current_dir);
-	auto dll_path = std::wstring(current_dir) + L"\\league_skin_changer.dll";
+	auto dll_path = std::wstring(current_dir) + L"\\R3nzSkin.dll";
 	auto handle = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
 
 	if (!handle || handle == INVALID_HANDLE_VALUE) {
