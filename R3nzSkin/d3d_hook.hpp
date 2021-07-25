@@ -1,7 +1,7 @@
 #pragma once
 
 namespace d3d_hook {
-	void hook() noexcept;
-	void unhook() noexcept;
+	void __stdcall hook() noexcept;
+	void __stdcall unhook() noexcept;
 };
 

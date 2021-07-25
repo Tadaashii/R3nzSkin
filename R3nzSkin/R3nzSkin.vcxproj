@@ -101,7 +101,7 @@
     <ClCompile Include="imgui_impl_win32.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="offsets.cpp" />
-    <ClCompile Include="skin_changer.cpp" />
+    <ClCompile Include="R3nzSkin.cpp" />
     <ClCompile Include="skin_database.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,7 +123,7 @@
     <ClInclude Include="json.hpp" />
     <ClInclude Include="menu.hpp" />
     <ClInclude Include="offsets.hpp" />
-    <ClInclude Include="skin_changer.hpp" />
+    <ClInclude Include="R3nzSkin.hpp" />
     <ClInclude Include="skin_database.hpp" />
     <ClInclude Include="vmt_smart_hook.hpp" />
   </ItemGroup>

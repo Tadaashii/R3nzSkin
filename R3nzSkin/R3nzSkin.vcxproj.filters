@@ -43,7 +43,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="skin_changer.cpp">
+    <ClCompile Include="R3nzSkin.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp" />
@@ -91,7 +91,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="skin_changer.hpp">
+    <ClInclude Include="R3nzSkin.hpp">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="skin_database.hpp">

@@ -10,7 +10,7 @@
 #include "offsets.hpp"
 #include "vmt_smart_hook.hpp"
 #include "menu.hpp"
-#include "skin_changer.hpp"
+#include "R3nzSkin.hpp"
 #include "skin_database.hpp"
 #include "imgui_impl_dx9.h"
 #include "imgui_impl_dx11.h"
@@ -148,7 +148,7 @@ namespace d3d_vtable {
 		auto client = *reinterpret_cast<GameClient**>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::GameClient);
 
 		if (client && client->game_state == GGameState_s::Running) {
-			skin_changer::update();
+			R3nzSkin::update();
 
 			if (menu_is_open) {
 				if (is_d3d11)
@@ -231,7 +231,7 @@ namespace d3d_vtable {
 };
 using namespace d3d_vtable;
 
-void d3d_hook::hook() noexcept
+void __stdcall d3d_hook::hook() noexcept
 {
 	auto material_registry = reinterpret_cast<uintptr_t(__stdcall*)()>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::Riot__Renderer__MaterialRegistry__GetSingletonPtr)();
 	auto d3d_device = *reinterpret_cast<IDirect3DDevice9**>(material_registry + offsets::MaterialRegistry::D3DDevice);
@@ -248,7 +248,7 @@ void d3d_hook::hook() noexcept
 	}
 }
 
-void d3d_hook::unhook() noexcept
+void __stdcall d3d_hook::unhook() noexcept
 {
 	SetWindowLongPtr(*reinterpret_cast<HWND*>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::Riot__g_window), GWLP_WNDPROC, original_wndproc);
 

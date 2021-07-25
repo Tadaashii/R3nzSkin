@@ -1,7 +1,7 @@
 #include <algorithm>
 
 #include "skin_database.hpp"
-#include "skin_changer.hpp"
+#include "R3nzSkin.hpp"
 #include "offsets.hpp"
 #include "fnv_hash.hpp"
 #include "game_classes.hpp"

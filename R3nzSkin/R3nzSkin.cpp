@@ -3,7 +3,7 @@
 #include <thread>
 #include <mutex>
 
-#include "skin_changer.hpp"
+#include "R3nzSkin.hpp"
 #include "offsets.hpp"
 #include "d3d_hook.hpp"
 #include "skin_database.hpp"
@@ -14,7 +14,7 @@
 
 std::once_flag change_skins;
 
-void skin_changer::update() noexcept
+void __stdcall R3nzSkin::update() noexcept
 {
 	auto league_module = std::uintptr_t(GetModuleHandle(nullptr));
 	auto player = *reinterpret_cast<AIBaseCommon**>(league_module + offsets::global::Player);
@@ -117,7 +117,7 @@ void skin_changer::update() noexcept
 	}
 }
 
-void skin_changer::init() noexcept
+void __stdcall R3nzSkin::init() noexcept
 {
 #ifdef _DEBUG
 	AllocConsole();
@@ -165,4 +165,4 @@ void skin_changer::init() noexcept
 	FreeLibraryAndExitThread(my_module, 0);
 }
 
-HMODULE skin_changer::my_module;
+HMODULE R3nzSkin::my_module;
