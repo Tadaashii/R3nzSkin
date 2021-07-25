@@ -3,8 +3,8 @@
 #include <Windows.h>
 
 namespace skin_changer {
-	void update();
-	void init();
+	void update() noexcept;
+	void init() noexcept;
 
 	extern HMODULE my_module;
 };
