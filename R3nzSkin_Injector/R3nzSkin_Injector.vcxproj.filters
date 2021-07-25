@@ -7,7 +7,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="league_skin_injector.cpp">
+    <ClCompile Include="R3nzSkin_Injector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
