@@ -112,7 +112,7 @@ void config::reset() noexcept
 char str_buffer[256];
 void menu::draw() noexcept
 {
-	ImGui::Begin("R3nzSkin");
+	ImGui::Begin("R3nzSkin", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysAutoResize);
 	{
 		static auto vector_getter_skin = [](void* vec, int idx, const char** out_text)
 		{
