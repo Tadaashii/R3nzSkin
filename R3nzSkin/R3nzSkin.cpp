@@ -119,29 +119,10 @@ void __stdcall R3nzSkin::update() noexcept
 
 void __stdcall R3nzSkin::init() noexcept
 {
-#ifdef _DEBUG
-	AllocConsole();
-	freopen("CONIN$", "r", stdin);
-	freopen("CONOUT$", "w", stdout);
-	freopen("CONOUT$", "w", stderr);
-#endif
 	memory::start(true);
 	using namespace std::chrono_literals;
 	auto client = *reinterpret_cast<GameClient**>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::GameClient);
 	while (!client || client->game_state != GGameState_s::Running) {
-#ifdef _DEBUG
-		switch (client->game_state) {
-		case GGameState_s::LoadingScreen:
-			printf("Game is on loading screen.\n");
-			break;
-		case GGameState_s::Finished:
-			printf("Game finished.\n");
-			break;
-		default:
-			printf("Unknown game state.\n");
-			break;
-		}
-#endif
 		std::this_thread::sleep_for(1s);
 		client = *reinterpret_cast<GameClient**>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::GameClient);
 	}
@@ -159,9 +140,6 @@ void __stdcall R3nzSkin::init() noexcept
 	}
 
 	d3d_hook::unhook();
-#ifdef _DEBUG
-	FreeConsole();
-#endif
 	FreeLibraryAndExitThread(my_module, 0);
 }
 
