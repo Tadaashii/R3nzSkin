@@ -72,9 +72,7 @@ uint8_t* find_signature(const wchar_t* szModule, const char* szSignature) noexce
 		return nullptr;
 	}
 	catch (std::exception& e) {
-#ifdef _DEBUG
-		printf("find_signature error: %s", e.what());
-#endif
+		MessageBoxA(nullptr, ("find_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
 	}
 }
 
@@ -88,7 +86,6 @@ public:
 	uint32_t* offset;
 };
 
-// Single GameClient Signature to game not crashe.
 std::vector<offset_signature> gameClientSig = {
 	{
 		{
@@ -314,9 +311,7 @@ void memory::start(bool gameClient) noexcept
 					auto address = find_signature(nullptr, pattern.c_str());
 
 					if (!address) {
-#ifdef _DEBUG
-						printf("Signature failed: %s\n", pattern.c_str());
-#endif
+						MessageBoxA(nullptr, ("Signature failed: %s", pattern.c_str()), "R3nzSkin", MB_OK | MB_ICONWARNING);
 						continue;
 					}
 					if (sig.read)
@@ -346,8 +341,6 @@ void memory::start(bool gameClient) noexcept
 		}
 	}
 	catch (std::exception& e) {
-#ifdef _DEBUG
-		printf("start_signature error: %s", e.what());
-#endif
+		MessageBoxA(nullptr, ("start_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
 	}
 }
