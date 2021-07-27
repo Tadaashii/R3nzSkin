@@ -35,6 +35,9 @@
 2. Press <kbd>Insert</kbd> to bring up the menu.
 3. Select skin for you, your teammates, enemies, wards, etc.
 
+# workaround for mid-game crashes
+If you turn off the cheat using the <kbd>unhook</kbd> button in the cheat menu after choosing the costume you will use in the game, your game will never crash.
+
 # Further optimizations
 If your CPU supports AVX / AVX2 / AVX-512 instruction set, you can enable it in project settings. This should result in more performant code, optimized for your CPU. Currently SSE2 instructions are selected in project settings.
 
