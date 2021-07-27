@@ -8,6 +8,7 @@
 #include "game_classes.hpp"
 #include "../imgui/imgui.h"
 #include "json.hpp"
+#include "R3nzSkin.hpp"
 
 using json = nlohmann::json;
 
@@ -148,6 +149,12 @@ void menu::draw() noexcept
 
 		auto player = *reinterpret_cast<AIBaseCommon**>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::Player);
 		if (player) {
+			ImGui::TextColored({ 0.92f, 0.55f, 0.21f, 1.00f }, "Average: %.1f ms/frame", 1000.0f / ImGui::GetIO().Framerate);
+			ImGui::TextColored({ 0.92f, 0.55f, 0.21f, 1.00f }, "FPS: %.1f FPS", ImGui::GetIO().Framerate);
+			ImGui::TextColored({ 0.13f, 0.92f, 0.13f, 1.00f }, "Coded By R3nzTheCodeGOD");
+			if (ImGui::Button("unhook", { 130, 25 })) R3nzSkin::run = false;
+			ImGui::Separator();
+
 			auto& values = skin_database::champions_skins[fnv::hash_runtime(player->get_character_data_stack()->base_skin.model.str)];
 			ImGui::Text("Localplayer skins settings:");
 
@@ -222,9 +229,9 @@ void menu::draw() noexcept
 				if (last_team != 0)
 					ImGui::Separator();
 				if (!is_enemy)
-					ImGui::Text("	Ally champions");
+					ImGui::Text("  Ally champions");
 				else
-					ImGui::Text("	Enemy champions");
+					ImGui::Text("  Enemy champions");
 				last_team = hero_team;
 			}
 

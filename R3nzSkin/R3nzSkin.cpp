@@ -133,9 +133,9 @@ void __stdcall R3nzSkin::init() noexcept
 	config::load();
 	d3d_hook::hook();
 
+	run = true;
 	while (true) {
-		if (GetAsyncKeyState(VK_F7))
-			break;
+		if (!run) break;
 		std::this_thread::sleep_for(200ms);
 	}
 
