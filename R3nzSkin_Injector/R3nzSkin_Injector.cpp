@@ -141,6 +141,7 @@ int main() noexcept
 			if (!is_injected(pid)) {
 				std::this_thread::sleep_for(1s);
 				inject(pid);
+			}
 		}
 		std::this_thread::sleep_for(3s);
 	}
