@@ -51,14 +51,14 @@ void config::save() noexcept
 	for (auto& it : config::current_summoner_emotes)
 		config_json["current_summoner_emotes"][std::to_string(it.first)] = it.second;
 
-	auto out = std::ofstream(L"league_changer.json");
+	auto out = std::ofstream(L"R3nzSkin.json");
 	out << config_json.dump();
 	out.close();
 }
 
 void config::load() noexcept
 {
-	auto out = std::ifstream(L"league_changer.json");
+	auto out = std::ifstream(L"R3nzSkin.json");
 	if (!out.good())
 		return;
 
