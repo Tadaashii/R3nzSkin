@@ -104,7 +104,7 @@ std::vector<offset_signature> gameClientSig = {
 std::vector<offset_signature> sigs = {
 	{
 		{
-			// "8B 0D ? ? ? ? 8B F8 81 C1 ? ? ? ? 57",
+			"8B 0D ? ? ? ? 8B F8 81 C1 ? ? ? ? 57",
 			"A1 ? ? ? ? 85 C0 74 18 84 C9",
 			"8B 0D ? ? ? ? 8D 54 24 14 8B 3D"
 		},
