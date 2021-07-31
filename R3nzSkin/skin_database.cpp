@@ -38,6 +38,7 @@ void skin_database::load() noexcept
 
 			if (i == 7 && fnv::hash_runtime(champion->champion_name.str) == FNV("Lux")) {
 				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxAir", "Elementalist Air Lux", i });
+				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxDark", "Elementalist Dark Lux", i });
 				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxFire", "Elementalist Fire Lux", i });
 				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxIce", "Elementalist Ice Lux", i });
 				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxMagma", "Elementalist Magma Lux", i });
