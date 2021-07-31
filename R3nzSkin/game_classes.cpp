@@ -34,17 +34,12 @@ void AIBaseCommon::change_skin(const char* model, std::int32_t skin) noexcept
 {
 	reinterpret_cast<xor_value<std::int32_t>*>(std::uintptr_t(this) + offsets::AIBaseCommon::SkinId)->encrypt(skin);
 	this->get_character_data_stack()->base_skin.skin = skin;
+
 	if (fnv::hash_runtime(this->get_character_data_stack()->base_skin.model.str) == FNV("Lux")) {
 		if (skin == 7) {
-			if (this->get_character_data_stack()->stack.empty()) {
-				this->get_character_data_stack()->push(model, skin);
-				return;
-			}
-			auto& last = this->get_character_data_stack()->stack.back();
-			last.skin = skin;
-			last.model.str = model;
-			last.model.length = strlen(model);
-			last.model.capacity = last.model.length + 1;
+			this->get_character_data_stack()->stack.clear();
+			this->get_character_data_stack()->push(model, skin);
+			return;
 		} else {
 			this->get_character_data_stack()->stack.clear();
 		}
