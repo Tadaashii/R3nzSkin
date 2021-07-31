@@ -35,7 +35,15 @@
 2. Press <kbd>Insert</kbd> to bring up the menu.
 3. Select skin for you, your teammates, enemies, wards, etc.
 
-# workaround for mid-game crashes
+# Workaround for mid-game crashes
+## Solution 1
+<div align="center">
+  <img height=500 src="https://cdn.discordapp.com/attachments/748413086083317811/870877094798839808/unknown.png" >
+</div>
+
+
+
+## Solution 2
 If you turn off the cheat using the <kbd>unhook</kbd> button in the cheat menu after choosing the costume you will use in the game, your game will never crash.
 
 # Further optimizations
