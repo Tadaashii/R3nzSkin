@@ -115,32 +115,28 @@ void menu::draw() noexcept
 {
 	ImGui::Begin("R3nzSkin", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_AlwaysAutoResize);
 	{
-		static auto vector_getter_skin = [](void* vec, int idx, const char** out_text)
-		{
+		static auto vector_getter_skin = [](void* vec, int idx, const char** out_text) {
 			auto& vector = *static_cast<std::vector<skin_database::skin_info>*>(vec);
 			if (idx < 0 || idx > static_cast<int>(vector.size())) { return false; }
-			*out_text = idx == 0 ? "Don't change" : vector.at(idx - 1).skin_name.c_str();
+			*out_text = idx == 0 ? "Default" : vector.at(idx - 1).skin_name.c_str();
 			return true;
 		};
 
-		static auto vector_getter_ward_skin = [](void* vec, int idx, const char** out_text)
-		{
+		static auto vector_getter_ward_skin = [](void* vec, int idx, const char** out_text) {
 			auto& vector = *static_cast<std::vector<std::pair<int32_t, std::string>>*>(vec);
 			if (idx < 0 || idx > static_cast<int>(vector.size())) { return false; }
-			*out_text = idx == 0 ? "Don't change" : vector.at(idx - 1).second.c_str();
+			*out_text = idx == 0 ? "Default" : vector.at(idx - 1).second.c_str();
 			return true;
 		};
 
-		static auto vector_getter_default = [](void* vec, int idx, const char** out_text)
-		{
+		static auto vector_getter_default = [](void* vec, int idx, const char** out_text) {
 			auto& vector = *static_cast<std::vector<std::string>*>(vec);
 			if (idx < 0 || idx > static_cast<int>(vector.size())) { return false; }
-			*out_text = idx == 0 ? "Don't change" : vector.at(idx - 1).c_str();
+			*out_text = idx == 0 ? "Default" : vector.at(idx - 1).c_str();
 			return true;
 		};
 
-		static auto vector_getter_summoner_emote = [](void* vec, int idx, const char** out_text)
-		{
+		static auto vector_getter_summoner_emote = [](void* vec, int idx, const char** out_text) {
 			auto& vector = *static_cast<std::vector<std::pair<int32_t, std::string>>*>(vec);
 			if (idx < 0 || idx >= static_cast<int>(vector.size())) { return false; }
 			*out_text = vector.at(idx).second.c_str();
