@@ -72,7 +72,7 @@ uint8_t* find_signature(const wchar_t* szModule, const char* szSignature) noexce
 		return nullptr;
 	}
 	catch (std::exception& e) {
-		MessageBoxA(nullptr, ("find_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+		// MessageBoxA(nullptr, ("find_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
 	}
 }
 
@@ -311,7 +311,7 @@ void memory::start(bool gameClient) noexcept
 					auto address = find_signature(nullptr, pattern.c_str());
 
 					if (!address) {
-						MessageBoxA(nullptr, ("Signature failed: %s", pattern.c_str()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+						// MessageBoxA(nullptr, ("Signature failed: %s", pattern.c_str()), "R3nzSkin", MB_OK | MB_ICONWARNING);
 						continue;
 					}
 					if (sig.read)
@@ -341,6 +341,6 @@ void memory::start(bool gameClient) noexcept
 		}
 	}
 	catch (std::exception& e) {
-		MessageBoxA(nullptr, ("start_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+		// MessageBoxA(nullptr, ("start_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
 	}
 }

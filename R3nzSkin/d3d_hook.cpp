@@ -111,7 +111,8 @@ namespace d3d_vtable {
 	ID3D11DeviceContext* d3d11_device_context = nullptr;
 	ID3D11RenderTargetView* main_render_target_view = nullptr;
 	IDXGISwapChain* p_swap_chain = nullptr;
-	void create_render_target() noexcept {
+	void create_render_target() noexcept
+	{
 		ID3D11Texture2D* back_buffer;
 		p_swap_chain->GetBuffer(0, IID_PPV_ARGS(&back_buffer));
 		d3d11_device->CreateRenderTargetView(back_buffer, NULL, &main_render_target_view);
@@ -315,6 +316,7 @@ void __stdcall d3d_hook::hook() noexcept
 		d3d_device_vmt->apply_hook<end_scene>(42);
 		d3d_device_vmt->apply_hook<reset>(16);
 	} else if (swap_chain) {
+		MessageBoxA(nullptr, "You are using DirectX11, to avoid crashes in the game, go to https://github.com/R3nzTheCodeGOD/R3nzSkin and learn how to switch to DirectX9 from the README.md section.", "R3nzSkin", MB_OK | MB_ICONWARNING);
 		swap_chain_vmt = std::make_unique<::vmt_smart_hook>(swap_chain);
 		swap_chain_vmt->apply_hook<dxgi_present>(8);
 		swap_chain_vmt->apply_hook<dxgi_resize_buffers>(13);
