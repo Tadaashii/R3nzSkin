@@ -305,7 +305,7 @@ namespace d3d_vtable {
 };
 using namespace d3d_vtable;
 
-void __stdcall d3d_hook::hook() noexcept
+void d3d_hook::hook() noexcept
 {
 	auto material_registry = reinterpret_cast<uintptr_t(__stdcall*)()>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::Riot__Renderer__MaterialRegistry__GetSingletonPtr)();
 	auto d3d_device = *reinterpret_cast<IDirect3DDevice9**>(material_registry + offsets::MaterialRegistry::D3DDevice);
@@ -323,7 +323,7 @@ void __stdcall d3d_hook::hook() noexcept
 	}
 }
 
-void __stdcall d3d_hook::unhook() noexcept
+void d3d_hook::unhook() noexcept
 {
 	SetWindowLongPtr(*reinterpret_cast<HWND*>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::Riot__g_window), GWLP_WNDPROC, original_wndproc);
 

@@ -14,7 +14,7 @@
 
 std::once_flag change_skins;
 
-void __stdcall R3nzSkin::update() noexcept
+void R3nzSkin::update() noexcept
 {
 	auto league_module = std::uintptr_t(GetModuleHandle(nullptr));
 	auto player = *reinterpret_cast<AIBaseCommon**>(league_module + offsets::global::Player);
@@ -117,7 +117,7 @@ void __stdcall R3nzSkin::update() noexcept
 	}
 }
 
-void __stdcall R3nzSkin::init() noexcept
+void R3nzSkin::init() noexcept
 {
 	memory::start(true);
 	using namespace std::chrono_literals;

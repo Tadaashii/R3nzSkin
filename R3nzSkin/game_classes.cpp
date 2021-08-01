@@ -44,12 +44,13 @@ void AIBaseCommon::change_skin(const char* model, std::int32_t skin) noexcept
 			this->get_character_data_stack()->stack.clear();
 		}
 	}
+
 	this->get_character_data_stack()->update(true);
 }
 
 AIBaseCommon* AIMinionClient::get_gold_redirect_target() noexcept
 {
-	static const auto GetGoldRedirectTarget = reinterpret_cast<AIBaseCommon * (__thiscall*)(void*)>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::GetGoldRedirectTarget);
+	static const auto GetGoldRedirectTarget = reinterpret_cast<AIBaseCommon*(__thiscall*)(void*)>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::GetGoldRedirectTarget);
 	return GetGoldRedirectTarget(this);
 }
 
