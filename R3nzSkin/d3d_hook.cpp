@@ -316,7 +316,6 @@ void d3d_hook::hook() noexcept
 		d3d_device_vmt->apply_hook<end_scene>(42);
 		d3d_device_vmt->apply_hook<reset>(16);
 	} else if (swap_chain) {
-		MessageBoxA(nullptr, "You are using DirectX11, to avoid crashes in the game, go to https://github.com/R3nzTheCodeGOD/R3nzSkin and learn how to switch to DirectX9 from the README.md section.", "R3nzSkin", MB_OK | MB_ICONWARNING);
 		swap_chain_vmt = std::make_unique<::vmt_smart_hook>(swap_chain);
 		swap_chain_vmt->apply_hook<dxgi_present>(8);
 		swap_chain_vmt->apply_hook<dxgi_resize_buffers>(13);
