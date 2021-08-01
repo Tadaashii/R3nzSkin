@@ -93,7 +93,7 @@
     <ClCompile Include="..\imgui\imgui_widgets.cpp" />
     <ClCompile Include="memory.cpp" />
     <ClCompile Include="game_classes.cpp" />
-    <ClCompile Include="d3d_hook.cpp" />
+    <ClCompile Include="hook.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="imgui_extend.cpp" />
     <ClCompile Include="imgui_impl_dx11.cpp" />
@@ -115,7 +115,7 @@
     <ClInclude Include="encryption.hpp" />
     <ClInclude Include="fnv_hash.hpp" />
     <ClInclude Include="game_classes.hpp" />
-    <ClInclude Include="d3d_hook.hpp" />
+    <ClInclude Include="hook.hpp" />
     <ClInclude Include="imgui_extend.h" />
     <ClInclude Include="imgui_impl_dx11.h" />
     <ClInclude Include="imgui_impl_dx9.h" />

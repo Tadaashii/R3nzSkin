@@ -6,7 +6,7 @@
 #include <d3d9.h>
 #include <d3d11.h>
 
-#include "d3d_hook.hpp"
+#include "hook.hpp"
 #include "offsets.hpp"
 #include "vmt_smart_hook.hpp"
 #include "menu.hpp"

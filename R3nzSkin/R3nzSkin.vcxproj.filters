@@ -32,14 +32,14 @@
     <Filter Include="src\json">
       <UniqueIdentifier>{7a1fb59e-1417-4d30-967c-e8ea7dfb206b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\d3d">
-      <UniqueIdentifier>{6b382e58-2f4f-42a8-8d19-ea492ca17eb7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\imgui\d3d11">
       <UniqueIdentifier>{b874ff58-83f7-458d-8e30-65b796924c58}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\memory">
       <UniqueIdentifier>{fb0c6058-a093-4f26-bc23-dd4f3d31e4c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hook">
+      <UniqueIdentifier>{6b382e58-2f4f-42a8-8d19-ea492ca17eb7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -83,8 +83,8 @@
     <ClCompile Include="offsets.cpp">
       <Filter>src\offsets</Filter>
     </ClCompile>
-    <ClCompile Include="d3d_hook.cpp">
-      <Filter>src\d3d</Filter>
+    <ClCompile Include="hook.cpp">
+      <Filter>src\hook</Filter>
     </ClCompile>
     <ClCompile Include="imgui_impl_dx11.cpp">
       <Filter>src\imgui\d3d11</Filter>
@@ -148,8 +148,8 @@
     <ClInclude Include="memory.hpp">
       <Filter>src\memory</Filter>
     </ClInclude>
-    <ClInclude Include="d3d_hook.hpp">
-      <Filter>src\d3d</Filter>
+    <ClInclude Include="hook.hpp">
+      <Filter>src\hook</Filter>
     </ClInclude>
     <ClInclude Include="imgui_impl_dx11.h">
       <Filter>src\imgui\d3d11</Filter>

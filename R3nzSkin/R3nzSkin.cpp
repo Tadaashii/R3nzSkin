@@ -5,7 +5,7 @@
 
 #include "R3nzSkin.hpp"
 #include "offsets.hpp"
-#include "d3d_hook.hpp"
+#include "hook.hpp"
 #include "skin_database.hpp"
 #include "menu.hpp"
 #include "fnv_hash.hpp"
