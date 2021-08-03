@@ -87,10 +87,9 @@ void R3nzSkin::update() noexcept
 		auto minion = minions->list[i];
 		auto owner = minion->get_gold_redirect_target();
 
-		if (owner)
-		{
+		if (owner) {
 			auto hash = fnv::hash_runtime(minion->get_character_data_stack()->base_skin.model.str);
-			if (hash == FNV("JammerDevice") || hash == FNV("SightWard") || hash == FNV("YellowTrinket") || hash == FNV("VisionWard")|| hash == FNV("TestCubeRender10Vision")) {
+			if (hash == FNV("JammerDevice") || hash == FNV("SightWard") || hash == FNV("YellowTrinket") || hash == FNV("VisionWard") || hash == FNV("TestCubeRender10Vision")) {
 				if (!player || owner == player) {
 					if (hash == FNV("TestCubeRender10Vision"))
 						change_skin_for_object(minion, 0);

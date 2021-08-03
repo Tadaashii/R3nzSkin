@@ -22,7 +22,7 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 bool menu_is_open = false;
 
 LONG_PTR original_wndproc;
-LRESULT __stdcall wnd_proc(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param) {
+static LRESULT __stdcall wnd_proc(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param) {
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, w_param, l_param))
 		return true;
 
@@ -31,7 +31,6 @@ LRESULT __stdcall wnd_proc(HWND hwnd, UINT msg, WPARAM w_param, LPARAM l_param) 
 		if (!menu_is_open)
 			config::save();
 	}
-
 	return CallWindowProcW((WNDPROC)original_wndproc, hwnd, msg, w_param, l_param);
 }
 

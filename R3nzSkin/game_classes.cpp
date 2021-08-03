@@ -8,7 +8,7 @@ std::uintptr_t SummonerEmoteUserComponent::rtti = 0;
 
 SummonerEmote* SummonerEmoteUserComponent::get_summoner_emote_data(std::int32_t id) noexcept
 {
-	static const auto GetSummonerEmoteData = reinterpret_cast<SummonerEmote * (__cdecl*)(std::int32_t)>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::SummonerEmoteUserComponent__GetSummonerEmoteData);
+	static const auto GetSummonerEmoteData = reinterpret_cast<SummonerEmote*(__cdecl*)(std::int32_t)>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::SummonerEmoteUserComponent__GetSummonerEmoteData);
 	return GetSummonerEmoteData(id);
 }
 
