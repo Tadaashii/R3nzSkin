@@ -16,22 +16,28 @@ void CharacterDataStack::update(bool change) noexcept
 	Update(this, change);
 }
 
+bool AIBaseCommon::skin_model_push(const char* model, const std::int32_t skin) noexcept
+{
+	const std::uint32_t champ_name = fnv::hash_runtime(this->get_character_data_stack()->base_skin.model.str);
+
+	if (champ_name == FNV("Lux")) {
+		if (skin == 7 && champ_name == FNV("Lux")) {
+			this->get_character_data_stack()->stack.clear();
+			this->get_character_data_stack()->push(model, skin);
+			return true;
+		} else
+			this->get_character_data_stack()->stack.clear();
+	}
+	return false;
+}
+
 void AIBaseCommon::change_skin(const char* model, std::int32_t skin) noexcept
 {
 	reinterpret_cast<xor_value<std::int32_t>*>(std::uintptr_t(this) + offsets::AIBaseCommon::SkinId)->encrypt(skin);
 	this->get_character_data_stack()->base_skin.skin = skin;
 
-	if (fnv::hash_runtime(this->get_character_data_stack()->base_skin.model.str) == FNV("Lux")) {
-		if (skin == 7) {
-			this->get_character_data_stack()->stack.clear();
-			this->get_character_data_stack()->push(model, skin);
-			return;
-		} else {
-			this->get_character_data_stack()->stack.clear();
-		}
-	}
-
-	this->get_character_data_stack()->update(true);
+	if (!this->skin_model_push(model, skin))
+		this->get_character_data_stack()->update(true);
 }
 
 AIBaseCommon* AIMinionClient::get_gold_redirect_target() noexcept
