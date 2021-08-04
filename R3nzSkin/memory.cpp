@@ -72,7 +72,9 @@ uint8_t* find_signature(const wchar_t* szModule, const char* szSignature) noexce
 		return nullptr;
 	}
 	catch (std::exception& e) {
-		// MessageBoxA(nullptr, ("find_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+#ifdef _DEBUG
+		MessageBoxA(nullptr, ("find_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+#endif
 	}
 }
 
@@ -112,18 +114,6 @@ std::vector<offset_signature> sigs = {
 		true,
 		0,
 		&offsets::global::Player
-	},
-	{
-		{
-			"8B 0D ? ? ? ? 50 8D 44 24 18",
-			"8B 35 ? ? ? ? C7 44 24 ? ? ? ? ? C7 44 24 ? ? ? ? ? E8",
-			"8B 0D ? ? ? ? 53 FF 37",
-			"B9 ? ? ? ? E8 ? ? ? ? 8D 88"
-		},
-		true,
-		true,
-		0,
-		&offsets::global::ManagerTemplate_AIHero_
 	},
 	{
 		{
@@ -195,15 +185,6 @@ std::vector<offset_signature> sigs = {
 	},
 	{
 		{
-			"8A 87 ? ? ? ? 88 4C 24 17"
-		},
-		false,
-		true,
-		-1,
-		&offsets::AIMinionClient::IsLaneMinion
-	},
-	{
-		{
 			"83 EC 50 53 55 56 57 8B F9 8B 47 04"
 		},
 		true,
@@ -261,34 +242,6 @@ std::vector<offset_signature> sigs = {
 		false,
 		0,
 		&offsets::functions::CharacterData__GetCharacterPackage
-	},
-	{
-		{
-			"C7 44 24 1C ? ? ? ? 8D 44 24 1C 8B CE 50 8D 44 24 10"
-		},
-		false,
-		true,
-		0,
-		&SummonerEmoteUserComponent::rtti
-	},
-	{
-		{
-			"81 EC ? ? ? ? A1 ? ? ? ? 33 C4 89 84 24 ? ? ? ? 56 FF B4 24 ? ? ? ? 8D 44 24 14",
-			"E8 ? ? ? ? 83 C4 04 85 C0 74 65 57"
-		},
-		true,
-		false,
-		0,
-		&offsets::functions::SummonerEmoteUserComponent__GetSummonerEmoteData
-	},
-	{
-		{
-			"83 EC 08 56 57 FF 74 24 14"
-		},
-		true,
-		false,
-		0,
-		&offsets::functions::SummonerEmoteUserComponent__SetEmoteIdForSlot
 	}
 };
 
@@ -311,7 +264,9 @@ void memory::start(bool gameClient) noexcept
 					auto address = find_signature(nullptr, pattern.c_str());
 
 					if (!address) {
-						// MessageBoxA(nullptr, ("Signature failed: %s", pattern.c_str()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+#ifdef _DEBUG
+						MessageBoxA(nullptr, ("Signature failed: %s", pattern.c_str()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+#endif
 						continue;
 					}
 					if (sig.read)
@@ -337,10 +292,12 @@ void memory::start(bool gameClient) noexcept
 				break;
 
 			using namespace std::chrono_literals;
-			std::this_thread::sleep_for(2s);
+			std::this_thread::sleep_for(1s);
 		}
 	}
 	catch (std::exception& e) {
-		// MessageBoxA(nullptr, ("start_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+#ifdef _DEBUG
+		MessageBoxA(nullptr, ("start_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+#endif
 	}
 }

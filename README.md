@@ -14,11 +14,9 @@
 
 `R3nzSkin` is internal skin changer for League of Legends.
 
-- Use any available skin for your champion, or any other in game, enemy or ally.
+- Use any available skin for your champion.
 - Automatic skins database update.
-- Change skin for lane minions.
 - In-game configuration with <a href="https://github.com/ocornut/imgui">ImGui</a>.
-- Configure your jungle mobs skins like baron, red, blue.
 - Change skins anytime and unlimited times in single game.
 - Support for spectator mode.
 - <a href="https://github.com/nlohmann/json">JSON</a> based configuration saving & loading.
@@ -33,10 +31,7 @@
    - League client can crash if injected before going into arena.
       - A workaround is to not inject until you are in the arena (you will need to be fast to not disrupt the game).
 2. Press <kbd>Insert</kbd> to bring up the menu.
-3. Select skin for you, your teammates, enemies, wards, etc.
-
-# Workaround for mid-game crashes
-If you turn off the cheat using the <kbd>unhook</kbd> button in the cheat menu after choosing the costume you will use in the game, your game will never crash.
+3. Select skin for you, wards, etc.
 
 # Further optimizations
 If your CPU supports AVX / AVX2 / AVX-512 instruction set, you can enable it in project settings. This should result in more performant code, optimized for your CPU. Currently SSE2 instructions are selected in project settings.

@@ -20,10 +20,6 @@ namespace offsets {
 		std::uint32_t SwapChain = 0;
 	};
 
-	namespace AIMinionClient {
-		std::uint32_t IsLaneMinion = 0;
-	};
-
 	namespace functions {
 		std::uint32_t Riot__Renderer__MaterialRegistry__GetSingletonPtr = 0;
 		std::uint32_t translateString_UNSAFE_DONOTUSE = 0;
@@ -31,7 +27,5 @@ namespace offsets {
 		std::uint32_t CharacterDataStack__Update = 0;
 		std::uint32_t GetGoldRedirectTarget = 0;
 		std::uint32_t CharacterData__GetCharacterPackage = 0;
-		std::uint32_t SummonerEmoteUserComponent__GetSummonerEmoteData = 0;
-		std::uint32_t SummonerEmoteUserComponent__SetEmoteIdForSlot = 0;
 	};
 };

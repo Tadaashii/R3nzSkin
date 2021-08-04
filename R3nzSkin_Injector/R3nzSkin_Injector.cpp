@@ -137,13 +137,12 @@ int main() noexcept
 	while (true) {
 		auto league_processes = find_processes(L"League of Legends.exe");
 		for (auto& pid : league_processes) {
-			std::this_thread::sleep_for(6s);
+			std::this_thread::sleep_for(2s);
 			if (!is_injected(pid)) {
-				std::this_thread::sleep_for(1s);
 				inject(pid);
 			}
 		}
-		std::this_thread::sleep_for(3s);
+		std::this_thread::sleep_for(2s);
 	}
 	return 0;
 }
