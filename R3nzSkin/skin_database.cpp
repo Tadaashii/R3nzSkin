@@ -34,18 +34,19 @@ void skin_database::load() noexcept
 				it->second = it->second + 1;
 			}
 
-			champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ std::string(champion->champion_name.str),skin_display_name_translated,i });
+			const std::uint32_t champ_name = fnv::hash_runtime(champion->champion_name.str);
+			champions_skins[champ_name].push_back(skin_info{ std::string(champion->champion_name.str),skin_display_name_translated,i });
 
-			if (i == 7 && fnv::hash_runtime(champion->champion_name.str) == FNV("Lux")) {
-				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxAir", "Elementalist Air Lux", i });
-				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxDark", "Elementalist Dark Lux", i });
-				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxFire", "Elementalist Fire Lux", i });
-				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxIce", "Elementalist Ice Lux", i });
-				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxMagma", "Elementalist Magma Lux", i });
-				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxMystic", "Elementalist Mystic Lux", i });
-				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxNature", "Elementalist Nature Lux", i });
-				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxStorm", "Elementalist Storm Lux", i });
-				champions_skins[fnv::hash_runtime(champion->champion_name.str)].push_back(skin_info{ "LuxWater", "Elementalist Water Lux", i });
+			if (i == 7 && champ_name == FNV("Lux")) {
+				champions_skins[champ_name].push_back(skin_info{ "LuxAir", "Elementalist Air Lux", i });
+				champions_skins[champ_name].push_back(skin_info{ "LuxDark", "Elementalist Dark Lux", i });
+				champions_skins[champ_name].push_back(skin_info{ "LuxFire", "Elementalist Fire Lux", i });
+				champions_skins[champ_name].push_back(skin_info{ "LuxIce", "Elementalist Ice Lux", i });
+				champions_skins[champ_name].push_back(skin_info{ "LuxMagma", "Elementalist Magma Lux", i });
+				champions_skins[champ_name].push_back(skin_info{ "LuxMystic", "Elementalist Mystic Lux", i });
+				champions_skins[champ_name].push_back(skin_info{ "LuxNature", "Elementalist Nature Lux", i });
+				champions_skins[champ_name].push_back(skin_info{ "LuxStorm", "Elementalist Storm Lux", i });
+				champions_skins[champ_name].push_back(skin_info{ "LuxWater", "Elementalist Water Lux", i });
 			}
 		}
 	}
