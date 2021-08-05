@@ -9,6 +9,8 @@
 #include "offsets.hpp"
 #include "game_classes.hpp"
 
+#define SEE_ERROR 0
+
 uint8_t* find_signature(const wchar_t* szModule, const char* szSignature) noexcept
 {
 	try {
@@ -70,11 +72,8 @@ uint8_t* find_signature(const wchar_t* szModule, const char* szSignature) noexce
 			}
 		}
 		return nullptr;
-	}
-	catch (std::exception& e) {
-#ifdef _DEBUG
-		MessageBoxA(nullptr, ("find_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
-#endif
+	} catch (...) {
+		return nullptr;
 	}
 }
 
@@ -264,9 +263,9 @@ void memory::start(bool gameClient) noexcept
 				for (auto& pattern : sig.sigs) {
 					auto address = find_signature(nullptr, pattern.c_str());
 
-					if (!address) {
-#ifdef _DEBUG
-						MessageBoxA(nullptr, ("Signature failed: %s", pattern.c_str()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+					if (address == nullptr) {
+#if SEE_ERROR
+						MessageBoxA(nullptr, pattern.c_str(), "R3nzSkin", MB_OK | MB_ICONWARNING);
 #endif
 						continue;
 					}
@@ -294,10 +293,9 @@ void memory::start(bool gameClient) noexcept
 
 			std::this_thread::sleep_for(1s);
 		}
-	}
-	catch (std::exception& e) {
-#ifdef _DEBUG
-		MessageBoxA(nullptr, ("start_signature error: %s", e.what()), "R3nzSkin", MB_OK | MB_ICONWARNING);
+	} catch (std::exception& e) {
+#if SEE_ERROR
+		MessageBoxA(nullptr, e.what(), "R3nzSkin", MB_OK | MB_ICONWARNING);
 #endif
 	}
 }
