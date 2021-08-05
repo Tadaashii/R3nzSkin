@@ -12,10 +12,10 @@
 #include "menu.hpp"
 #include "R3nzSkin.hpp"
 #include "skin_database.hpp"
-#include "imgui_impl_dx9.h"
-#include "imgui_impl_dx11.h"
-#include "imgui_impl_win32.h"
-#include "imgui_extend.h"
+#include "imgui\imgui_impl_dx9.h"
+#include "imgui\imgui_impl_dx11.h"
+#include "imgui\imgui_impl_win32.h"
+#include "imgui\imgui_extend.h"
 #include "game_classes.hpp"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

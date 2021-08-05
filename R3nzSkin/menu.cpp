@@ -6,7 +6,7 @@
 #include "fnv_hash.hpp"
 #include "offsets.hpp"
 #include "game_classes.hpp"
-#include "../imgui/imgui.h"
+#include "imgui/imgui.h"
 #include "json.hpp"
 #include "R3nzSkin.hpp"
 
