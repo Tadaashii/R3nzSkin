@@ -91,8 +91,7 @@ bool get_system_font_path(const std::string& name, std::string& path) noexcept
 	return false;
 }
 
-static const ImWchar ranges[] =
-{
+static const ImWchar ranges[] = {
 	0x0020, 0x00FF, // Basic Latin + Latin Supplement
 	0x0400, 0x044F, // Cyrillic
 	0x0100, 0x017F, // Latin Extended-A
@@ -122,7 +121,7 @@ namespace d3d_vtable {
 	{
 		skin_database::load();
 		ImGui::CreateContext();
-		ImGuiStyle& style = ImGui::GetStyle();
+		auto& style = ImGui::GetStyle();
 
 		style.WindowPadding = ImVec2(6, 6);
 		style.FramePadding = ImVec2(6, 4);
@@ -144,7 +143,7 @@ namespace d3d_vtable {
 		style.TabRounding = 0;
 		style.PopupRounding = 0;
 
-		ImVec4* colors = style.Colors;
+		auto* colors = style.Colors;
 
 		colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 		colors[ImGuiCol_TextDisabled] = ImVec4(0.44f, 0.44f, 0.44f, 1.00f);
@@ -218,7 +217,7 @@ namespace d3d_vtable {
 
 	void render(void* device, bool is_d3d11 = false) noexcept
 	{
-		auto client = *reinterpret_cast<GameClient**>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::GameClient);
+		const auto client = *reinterpret_cast<GameClient**>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::GameClient);
 
 		if (client && client->game_state == GGameState_s::Running) {
 			R3nzSkin::update();
@@ -306,9 +305,9 @@ using namespace d3d_vtable;
 
 void d3d_hook::hook() noexcept
 {
-	auto material_registry = reinterpret_cast<uintptr_t(__stdcall*)()>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::Riot__Renderer__MaterialRegistry__GetSingletonPtr)();
-	auto d3d_device = *reinterpret_cast<IDirect3DDevice9**>(material_registry + offsets::MaterialRegistry::D3DDevice);
-	auto swap_chain = *reinterpret_cast<IDXGISwapChain**>(material_registry + offsets::MaterialRegistry::SwapChain);
+	const auto material_registry = reinterpret_cast<uintptr_t(__stdcall*)()>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::Riot__Renderer__MaterialRegistry__GetSingletonPtr)();
+	const auto d3d_device = *reinterpret_cast<IDirect3DDevice9**>(material_registry + offsets::MaterialRegistry::D3DDevice);
+	const auto swap_chain = *reinterpret_cast<IDXGISwapChain**>(material_registry + offsets::MaterialRegistry::SwapChain);
 
 	if (d3d_device) {
 		d3d_device_vmt = std::make_unique<::vmt_smart_hook>(d3d_device);

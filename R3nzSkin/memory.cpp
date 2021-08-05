@@ -248,8 +248,9 @@ std::vector<offset_signature> sigs = {
 void memory::start(bool gameClient) noexcept
 {
 	try {
-		auto base = std::uintptr_t(GetModuleHandle(nullptr));
-		auto signatureToSearch = (gameClient ? gameClientSig : sigs);
+		using namespace std::chrono_literals;
+		const auto base = std::uintptr_t(GetModuleHandle(nullptr));
+		const auto signatureToSearch = (gameClient ? gameClientSig : sigs);
 
 		for (auto& sig : signatureToSearch)
 			*sig.offset = 0;
@@ -291,7 +292,6 @@ void memory::start(bool gameClient) noexcept
 			if (!missing_offset)
 				break;
 
-			using namespace std::chrono_literals;
 			std::this_thread::sleep_for(1s);
 		}
 	}

@@ -9,10 +9,11 @@
 void skin_database::load() noexcept
 {
 	static const auto translateString_UNSAFE_DONOTUSE = reinterpret_cast<const char* (__cdecl*)(const char*)>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::translateString_UNSAFE_DONOTUSE);
-	auto g_championg_manager = *reinterpret_cast<ChampionManager**>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::ChampionManager);
-	for (auto& champion : g_championg_manager->champions) {
+	const auto g_championg_manager = *reinterpret_cast<ChampionManager**>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::global::ChampionManager);
+
+	for (const auto& champion : g_championg_manager->champions) {
 		std::vector<int32_t> skins_ids;
-		for (auto& skin : champion->skins)
+		for (const auto& skin : champion->skins)
 			skins_ids.push_back(skin.skin_id);
 		std::sort(skins_ids.begin(), skins_ids.end());
 
@@ -24,7 +25,7 @@ void skin_database::load() noexcept
 			skin_display_name.append(std::to_string(i));
 
 			auto skin_display_name_translated = i > 0 ? std::string(translateString_UNSAFE_DONOTUSE(skin_display_name.c_str())) : std::string(champion->champion_name.str);
-			auto it = temp_skin_list.find(skin_display_name_translated);
+			const auto it = temp_skin_list.find(skin_display_name_translated);
 
 			if (it == temp_skin_list.end())
 				temp_skin_list[skin_display_name_translated] = 1;
@@ -34,7 +35,7 @@ void skin_database::load() noexcept
 				it->second = it->second + 1;
 			}
 
-			const std::uint32_t champ_name = fnv::hash_runtime(champion->champion_name.str);
+			const auto champ_name = fnv::hash_runtime(champion->champion_name.str);
 			champions_skins[champ_name].push_back(skin_info{ std::string(champion->champion_name.str),skin_display_name_translated,i });
 
 			if (i == 7 && champ_name == FNV("Lux")) {
@@ -52,8 +53,9 @@ void skin_database::load() noexcept
 	}
 
 	for (auto ward_skin_id = 1;; ward_skin_id++) {
-		auto ward_display_name = std::string("game_character_skin_displayname_SightWard_" + std::to_string(ward_skin_id));
-		auto ward_display_name_translated = std::string(translateString_UNSAFE_DONOTUSE(ward_display_name.c_str()));
+		const auto ward_display_name = std::string("game_character_skin_displayname_SightWard_" + std::to_string(ward_skin_id));
+		const auto ward_display_name_translated = std::string(translateString_UNSAFE_DONOTUSE(ward_display_name.c_str()));
+		
 		if (ward_display_name == ward_display_name_translated)
 			break;
 
@@ -62,7 +64,8 @@ void skin_database::load() noexcept
 
 	static const auto get_skins_len_for_model = [](std::string model) -> uint32_t {
 		static const auto CharacterData__GetCharacterPackage = reinterpret_cast<uintptr_t(__cdecl*)(std::string&, int32_t)>(std::uintptr_t(GetModuleHandle(nullptr)) + offsets::functions::CharacterData__GetCharacterPackage);
-		auto default_skin_data = *reinterpret_cast<uintptr_t*>(CharacterData__GetCharacterPackage(model, 0) + 0x3C);
+		const auto default_skin_data = *reinterpret_cast<uintptr_t*>(CharacterData__GetCharacterPackage(model, 0) + 0x3C);
+		
 		for (auto skins_len = 1;; skins_len++) {
 			if (*reinterpret_cast<uintptr_t*>(CharacterData__GetCharacterPackage(model, skins_len) + 0x3C) == default_skin_data)
 				return skins_len;

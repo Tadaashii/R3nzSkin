@@ -83,8 +83,8 @@ public:
 	std::vector<CharacterStackData> stack;
 	CharacterStackData base_skin;
 
-	void update(bool change) noexcept;
-	void push(const char* model, std::int32_t skin) noexcept;
+	void update(const bool change) noexcept;
+	void push(const char* model, const std::int32_t skin) noexcept;
 };
 
 class ComponentHost {
@@ -111,7 +111,7 @@ public:
 	CharacterDataStack* get_character_data_stack() { return reinterpret_cast<CharacterDataStack*>(std::uintptr_t(this) + offsets::AIBaseCommon::CharacterDataStack); }
 
 	bool skin_model_push(const char* model, const std::int32_t skin) noexcept;
-	void change_skin(const char* model, std::int32_t skin) noexcept;
+	void change_skin(const char* model, const std::int32_t skin) noexcept;
 };
 
 class AIHero : public AIBaseCommon {
